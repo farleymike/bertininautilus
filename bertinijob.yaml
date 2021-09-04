@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: bertini-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: bertini-container
+        image: mfarley/bertininautilus:latest
+        env:
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              key: AWS_ACCESS_KEY_ID
+              name: awsbertinicreds
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              key: AWS_SECRET_ACCESS_KEY
+              name: awsbertinicreds
+        - name: AWS_DEFAULT_REGION
+          value: "us-west-2"
+        resources:
+          limits:
+            memory: 100Mi
+            cpu: 100m
+          requests:
+            memory: 100Mi
+            cpu: 100m
+        command: ["/bertini/runbertini.sh", "s3://bertini-nautilus/test2", "input"]
+      restartPolicy: Never
+  backoffLimit: 4

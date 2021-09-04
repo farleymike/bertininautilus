@@ -16,4 +16,4 @@ echo "Bertini has completed..."
 
 echo "Uploading results to S3..."
 
-aws s3 cp ./ $S3_URI --recursive
+aws s3 cp ./ $1 --recursive

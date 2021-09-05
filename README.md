@@ -6,6 +6,10 @@ It's purpose built to use an input file from S3 and move output back to the same
 
 The S3 credentials are read from a Kubernetes Secret that must be created prior to creating the Kubernetes Job.
 
+## Sample Workflow
+
+![Bertini Workflow Diagram](bertini-workflow-diagram.png)
+
 # Building Docker Image
 
 If you would like to build the image yourself:

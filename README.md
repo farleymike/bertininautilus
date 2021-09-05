@@ -1,33 +1,39 @@
 # Background
 
-This repo contains the files necessary to build the Docker container used to run Bertini jobs onthe PRP Nautiful Kubernets cluster.
+This repo contains the files necessary to build a Docker container used to run [Bertini](https://bertini.nd.edu/) jobs on the [PRP Nautilus](https://pacificresearchplatform.org/nautilus/) Kubernetes cluster.
 
-It's purpose built to use an input file from S3 and move output files back to S3.
+It's purpose built to use an input file from S3 and move output back to the same S3 bucket/folder.
 
-The S3 credentials are read from a Kubernets Secret via a volume to avoid passing sensitive as environment variables.
+The S3 credentials are read from a Kubernetes Secret that must be created prior to creating the Kubernetes Job.
 
 # Building Docker Image
 
 # Creating Kubernets Secrets
 
-Create two files:
-1. aws_key.txt
-2. aws_secret.txt
-
-Add your your AWS access key and secret access key to the appropriate file.
-
-Using kubectl, create two secrets using the data from the files you just created.
+Using kubectl, create one secret that will hold to values that corospond to your S3 access and secret keys.
 
 ```
- $ kubectl create -n <my_namespace> secret generic awsbertinicreds --from-file=aws_key.txt --from-file=aws_secret.txt
+ $ kubectl create -n <your namespace> secret generic awsbertinicreds --from-literal=AWS_ACCESS_KEY_ID=xxx --from-literal=AWS_SECRET_ACCESS_KEY='xxx'
  ```
 
  Check that the secret was created:
 
  ```
- $ kubectl get -n my_namespace secrets
+ $ kubectl get -n <your namespace> secrets
  ```
-
 
 # Running Container
 
+A sample Kubernetes job definition file is provide in the repot named bertinijob.yaml. This file will create a Kubernets Job that will run Bertini on the specified input. There are two things that need to be changed in this file:
+
+Update the AWS region environment variable to match that of your S3 bucket location:
+
+```
+value: "us-west-2"
+```
+
+Update the command specifying your S3 bucket and Bertini input file name.
+
+```
+command: ["/bertini/runbertini.sh", "s3://bertini-nautilus/test2", "input"]
+```

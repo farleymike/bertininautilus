@@ -23,11 +23,11 @@ spec:
           value: "us-west-2"
         resources:
           limits:
-            memory: 100Mi
-            cpu: 100m
+            memory: 1024Mi
+            cpu: 1000m
           requests:
-            memory: 100Mi
-            cpu: 100m
-        command: ["/bertini/runbertini.sh", "s3://bertini-nautilus/test2", "input"]
+            memory: 512Mi
+            cpu: 500m
+        command: ["/bertini/runbertini.sh", "s3://bertini-nautilus/test", "input.txt"]
       restartPolicy: Never
   backoffLimit: 4

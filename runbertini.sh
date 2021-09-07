@@ -1,5 +1,8 @@
 #!/bin/sh
 
+echo "Start time:"
+date
+
 cd /bertini/files
 
 echo "Downloading input files from S3..."
@@ -17,3 +20,6 @@ echo "Bertini has completed..."
 echo "Uploading results to S3..."
 
 aws s3 cp ./ $1 --recursive
+
+echo "End time:"
+date

@@ -24,10 +24,10 @@ spec:
         resources:
           limits:
             memory: 512Mi
-            cpu: 1000m
+            cpu: 2000m
           requests:
             memory: 256Mi
-            cpu: 500m
+            cpu: 2000m
         command: ["/bertini/runbertini.sh", "s3://bertini-nautilus/test", "input.txt"]
       restartPolicy: Never
   backoffLimit: 4

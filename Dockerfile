@@ -7,6 +7,8 @@ RUN apk --no-cache add curl
 RUN apk add --no-cache \
         python3 \
         py3-pip \
+        openssh \
+        openmpi \
     && pip3 install --upgrade pip \
     && pip3 install \
         awscli \
